@@ -111,14 +111,14 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
       const addressRaw = addresses[0] || (await api.getUnusedAddresses())[0];
       const addressBech32 = addressRaw ? toBech32IfHex(addressRaw) : null;
 
-      // Get balance in lovelace and convert to ADA
-      const balanceLovelace = await api.getBalance();
+      // Get balance in ADA
+      const balanceAda = await api.getBalance();
       // Parse the CBOR encoded balance (simplified for demo)
-      const balanceAda = parseInt(balanceLovelace, 16) / 1000000 || 0;
+      const balanceAdaParsed = parseInt(balanceAda, 16) / 1000000 || 0;
 
       setWalletAddress(addressBech32);
       setWalletName(wallet);
-      setBalance(balanceAda);
+      setBalance(balanceAdaParsed);
       setIsConnected(true);
     } catch (error) {
       console.error('Failed to connect wallet:', error);
